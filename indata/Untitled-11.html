@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Servicio - IN Data</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #5d84b1;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    header img { height: 60px; }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover { color: #00b4d8; }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #002b5b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #b7c8db;
+      color: #002b5b;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    select, input[type="number"] {
+      padding: 5px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #5d84b1;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover { background-color: #002b5b; }
+
+    footer {
+      text-align: center;
+      background-color: #002b5b;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    footer a { color: #00b4d8; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="indatasf.png" alt="Logo IN Data">
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="carrito.html">🛒 Carrito</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1 id="titulo-servicio">Servicio</h1>
+
+    <table>
+      <tr>
+        <th>Tipo</th>
+        <th>Costo Mínimo</th>
+        <th>Costo Máximo</th>
+      </tr>
+      <tr>
+        <td>Individual</td>
+        <td id="costo-min-ind"></td>
+        <td id="costo-max-ind"></td>
+      </tr>
+      <tr>
+        <td>Grupal</td>
+        <td id="costo-min-gru"></td>
+        <td id="costo-max-gru"></td>
+      </tr>
+    </table>
+
+    <div class="controls">
+      <label for="tipo">Selecciona el tipo:</label>
+      <select id="tipo">
+        <option value="Individual">Individual</option>
+        <option value="Grupal">Grupal</option>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1">
+
+      <button id="agregar">Agregar al carrito</button>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+      <a href="javascript:history.back()" style="color:#002b5b; text-decoration:none;">⬅ Regresar</a>
+    </div>
+  </div>
+
+  <script>
+    const servicios = {
+      // 💻 Desarrollo de Software
+      "Aplicaciones móviles": { indMin: 3000, indMax: 7000, gruMin: 8000, gruMax: 15000 },
+      "Software empresarial": { indMin: 5000, indMax: 9000, gruMin: 10000, gruMax: 18000 },
+      "Desarrollo web": { indMin: 2500, indMax: 6000, gruMin: 7000, gruMax: 13000 },
+      "Sistemas de automatización": { indMin: 6000, indMax: 11000, gruMin: 12000, gruMax: 20000 },
+      "Diseño de software": { indMin: 4000, indMax: 8000, gruMin: 9000, gruMax: 16000 },
+      "Codificación": { indMin: 2000, indMax: 5000, gruMin: 6000, gruMax: 12000 },
+      "Resolución de problemas": { indMin: 1500, indMax: 4000, gruMin: 5000, gruMax: 9000 },
+      "Pruebas de software": { indMin: 2500, indMax: 5500, gruMin: 7000, gruMax: 13000 },
+      "Optimización de rendimiento": { indMin: 3000, indMax: 6500, gruMin: 8000, gruMax: 14000 },
+
+      // 🛠️ Soporte y Mantenimiento
+      "Limpieza del disco duro": { indMin: 500, indMax: 1000, gruMin: 1500, gruMax: 3000 },
+      "Desfragmentación del disco duro": { indMin: 700, indMax: 1200, gruMin: 1800, gruMax: 3200 },
+      "Verificación de actualizaciones": { indMin: 400, indMax: 900, gruMin: 1200, gruMax: 2500 },
+      "Monitoreo de rendimiento": { indMin: 600, indMax: 1500, gruMin: 1600, gruMax: 3200 },
+      "Inspecciones de seguridad": { indMin: 800, indMax: 2000, gruMin: 2000, gruMax: 4000 },
+      "Seguridad informática": { indMin: 1000, indMax: 2500, gruMin: 2500, gruMax: 5000 },
+      "Atención remota y presencial": { indMin: 500, indMax: 1300, gruMin: 1500, gruMax: 2800 },
+      "Mantenimiento preventivo": { indMin: 900, indMax: 2200, gruMin: 2500, gruMax: 4800 },
+      "Soporte técnico": { indMin: 700, indMax: 1800, gruMin: 2000, gruMax: 4000 },
+
+      // 🧠 Capacitación Tecnológica
+      "Capacitación en ofimática": { indMin: 1500, indMax: 3000, gruMin: 4000, gruMax: 8000 },
+      "Cursos de programación": { indMin: 2000, indMax: 4500, gruMin: 6000, gruMax: 10000 },
+      "Capacitación en bases de datos": { indMin: 1800, indMax: 3500, gruMin: 5000, gruMax: 9000 },
+      "Ciberseguridad básica y/o avanzada": { indMin: 2500, indMax: 6000, gruMin: 8000, gruMax: 14000 },
+      "Manejo de software de diseño gráfico": { indMin: 1800, indMax: 3500, gruMin: 4500, gruMax: 8000 },
+      "Uso de plataformas de colaboración": { indMin: 1500, indMax: 3000, gruMin: 4000, gruMax: 7000 },
+      "Capacitación en marketing digital": { indMin: 2000, indMax: 5000, gruMin: 6000, gruMax: 10000 },
+      "Automatización de procesos": { indMin: 2500, indMax: 5500, gruMin: 7000, gruMax: 12000 },
+      "Uso de IA": { indMin: 3000, indMax: 7000, gruMin: 9000, gruMax: 15000 },
+      "Uso básico del hardware y software de un equipo de cómputo": { indMin: 1200, indMax: 2500, gruMin: 3500, gruMax: 6000 },
+
+      // 🌐 Infraestructura y Redes
+      "Redes LAN": { indMin: 2500, indMax: 5000, gruMin: 7000, gruMax: 12000 },
+      "Redes WAN": { indMin: 3000, indMax: 6000, gruMin: 8000, gruMax: 13000 },
+      "Servidores físicos": { indMin: 4000, indMax: 8000, gruMin: 10000, gruMax: 16000 },
+      "Servidores en la nube": { indMin: 3500, indMax: 7500, gruMin: 9000, gruMax: 15000 },
+      "Routers y switches": { indMin: 2000, indMax: 4000, gruMin: 6000, gruMax: 10000 },
+      "Firewall": { indMin: 2500, indMax: 5000, gruMin: 7000, gruMax: 12000 },
+      "VPN (Red Privada Virtual)": { indMin: 3000, indMax: 6000, gruMin: 8000, gruMax: 13000 },
+      "Centros de datos": { indMin: 5000, indMax: 10000, gruMin: 12000, gruMax: 20000 },
+      "Infraestructura de cableado": { indMin: 2500, indMax: 5500, gruMin: 7000, gruMax: 11000 },
+      "Redes inalámbricas": { indMin: 2000, indMax: 4500, gruMin: 6000, gruMax: 10000 }
+    };
+
+    // 🔍 Obtener el servicio desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const servicio = decodeURIComponent(params.get("servicio"));
+    const datos = servicios[servicio];
+
+    // 🧾 Mostrar información
+    document.getElementById("titulo-servicio").innerText = servicio || "Servicio no encontrado";
+    if (datos) {
+      document.getElementById("costo-min-ind").innerText = `$${datos.indMin.toLocaleString()} MXN`;
+      document.getElementById("costo-max-ind").innerText = `$${datos.indMax.toLocaleString()} MXN`;
+      document.getElementById("costo-min-gru").innerText = `$${datos.gruMin.toLocaleString()} MXN`;
+      document.getElementById("costo-max-gru").innerText = `$${datos.gruMax.toLocaleString()} MXN`;
+    } else {
+      document.querySelector("table").innerHTML = "<tr><td colspan='3'>Servicio no encontrado.</td></tr>";
+    }
+
+    // 🛒 Agregar al carrito
+    document.getElementById("agregar").addEventListener("click", () => {
+      const tipo = document.getElementById("tipo").value;
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      carrito.push({ servicio, tipo, cantidad });
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+
+      alert("✅ Servicio agregado al carrito");
+      window.location.href = "carrito.html";
+    });
+  </script>
+</body>
+</html>
