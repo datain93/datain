@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Servicio - IN Data</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #5d84b1;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      color: #00b4d8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #002b5b;
+    }
+
+    img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #b7c8db;
+      color: #002b5b;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    select, input[type="number"] {
+      padding: 5px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #5d84b1;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #002b5b;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #002b5b;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #00b4d8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="indatasf.png" alt="Logo IN Data">
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="dessoft.html">🛒 Carrito</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Aplicaciones Móviles</h1>
+    <img src="img/appmovil.jpg" alt="Imagen del servicio">
+
+    <table>
+      <tr>
+        <th>Tipo</th>
+        <th>Costo Mínimo</th>
+        <th>Costo Máximo</th>
+      </tr>
+      <tr>
+        <td>Individual</td>
+        <td>$3,000 MXN</td>
+        <td>$7,000 MXN</td>
+      </tr>
+      <tr>
+        <td>Grupal</td>
+        <td>$8,000 MXN</td>
+        <td>$15,000 MXN</td>
+      </tr>
+    </table>
+
+    <div class="controls">
+      <label for="tipo">Selecciona el tipo:</label>
+      <select id="tipo">
+        <option value="individual">Individual</option>
+        <option value="grupal">Grupal</option>
+      </select>
+
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" value="1" min="1">
+
+      <button id="agregar">Agregar al carrito</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>📍 <a href="https://maps.app.goo.gl/Si4cSWZTU5xFrepf6" target="_blank">Ubicación en Google Maps</a></p>
+    <p>☎️ <a href="tel:+525610814740">5610814740</a> | 📧 <a href="mailto:indatamx@gmail.com">indatamx@gmail.com</a></p>
+    <p>2025 IN Data | Consultoría Tecnológica</p>
+  </footer>
+
+  <script>
+    document.getElementById('agregar').addEventListener('click', () => {
+      const tipo = document.getElementById('tipo').value;
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      const servicio = "Aplicacione móviles";
+
+      // Guardar en localStorage (simula el carrito)
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito.push({ servicio, tipo, cantidad });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+
+      alert('Servicio agregado al carrito ✅');
+      window.location.href = "carrito.html";
+    });
+  </script>
+</body>
+</html>

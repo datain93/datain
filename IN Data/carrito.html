@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - IN Data</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      color: #333;
+    }
+
+    /* Encabezado */
+    header {
+      background-color: #5d84b1;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    header img {
+      height: 60px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .btn-volver {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-volver:hover {
+      color: #00b4d8;
+    }
+
+    .btn-cotizacion {
+      background-color: #00b4d8;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-cotizacion:hover {
+      background-color: #0090aa;
+    }
+
+    /* Contenido */
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #002b5b;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table th, table td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #b7c8db;
+      color: #002b5b;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 15px;
+      color: #002b5b;
+    }
+
+    .btn {
+      background-color: #5d84b1;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #4a6e8c;
+    }
+
+    .btn-delete {
+      background-color: #d9534f;
+    }
+
+    .btn-delete:hover {
+      background-color: #c9302c;
+    }
+
+    .btn-vaciar {
+      background-color: #adb5bd;
+      margin-top: 10px;
+    }
+
+    .btn-vaciar:hover {
+      background-color: #868e96;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <div class="nav-left">
+      
+      <img src="indatasf.png" alt="Logo IN Data">
+      <button class="btn-volver" onclick="window.location.href='IN Data.html'">Volver</button>
+    </div>
+    <button class="btn-cotizacion" onclick="window.location.href='form.html'">
+      Cotización personalizada
+    </button>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h1>🛒 Carrito de compras</h1>
+    <table id="carrito-tabla">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Desarrollo Web Básico</td>
+          <td>Individual</td>
+          <td>$2,000</td>
+          <td><button class="btn btn-delete" onclick="eliminarFila(this)">Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>Mantenimiento de Redes</td>
+          <td>Grupal</td>
+          <td>$1,200</td>
+          <td><button class="btn btn-delete" onclick="eliminarFila(this)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="total" id="total"></p>
+    <button class="btn btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+  </main>
+
+  <script>
+    function calcularTotal() {
+      let total = 0;
+      const filas = document.querySelectorAll('#carrito-tabla tbody tr');
+      filas.forEach(fila => {
+        const precio = fila.cells[2].innerText.replace('$', '').replace(',', '');
+        total += parseFloat(precio);
+      });
+      document.getElementById('total').innerText = `Total: $${total.toFixed(2)}`;
+    }
+
+    function eliminarFila(btn) {
+      const fila = btn.closest('tr');
+      fila.remove();
+      calcularTotal();
+    }
+
+    function vaciarCarrito() {
+      const tbody = document.querySelector('#carrito-tabla tbody');
+      tbody.innerHTML = '';
+      calcularTotal();
+    }
+
+    calcularTotal();
+  </script>
+
+</body>
+</html>
